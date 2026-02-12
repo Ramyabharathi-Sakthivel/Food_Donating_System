@@ -1,0 +1,169 @@
+CREATE TABLE donation_table1 (
+    donation_id            VARCHAR2(10) PRIMARY KEY,
+    donor_name             VARCHAR(150),
+    donor_phone            VARCHAR(20),
+    donor_address          VARCHAR(200),
+    city_area              VARCHAR(80),
+    food_type              VARCHAR(30),
+    approx_quantity        NUMBER(10, 2),
+    prepared_time          DATE,
+    expiry_cutoff_time     DATE,
+    preferred_pickup_place VARCHAR2(30),
+    donation_status        VARCHAR2(20),
+    remarks                VARCHAR2(400)
+);
+
+INSERT INTO donation_table1 VALUES ( 'DN1001',
+                                    'Rahul Mehta',
+                                    '9876500001',
+                                    'Flat 2B, Green Residency',
+                                    'Adyar',
+                                    'COOKED',
+                                    20.00,
+                                    TO_DATE('2025-04-01 18:00', 'YYYY-MM-DD HH24:MI'),
+                                    TO_DATE('2025-04-01 22:00', 'YYYY-MM-DD HH24:MI'),
+                                    'Evening before 9 PM',
+                                    'OPEN',
+                                    'Rice and curry for approx. 40 people' );
+
+INSERT INTO donation_table1 VALUES ( 'DN1002',
+                                    'Hotel Green Palace',
+                                    '9876500002',
+                                    'No. 10, Lake View Road',
+                                    'Velachery',
+                                    'Cooked',
+                                    50.00,
+                                    TO_DATE('2025-04-01 19:30', 'YYYY-MM-DD HH24:MI'),
+                                    TO_DATE('2025-04-02 00:00', 'YYYY-MM-DD HH24:MI'),
+                                    'Night pickup',
+                                    'ASSIGNED',
+                                    'Packed in aluminium containers' );
+
+INSERT INTO donation_table1 VALUES ( 'DN1003',
+                                    'Arun',
+                                    '9876500003',
+                                    'Flat 2B, Blue Residency',
+                                    'Anna nagar',
+                                    'COOKED',
+                                    40.00,
+                                    TO_DATE('2025-04-02 19:00', 'YYYY-MM-DD HH24:MI'),
+                                    TO_DATE('2025-04-02 21:00', 'YYYY-MM-DD HH24:MI'),
+                                    'Evening before 10 PM',
+                                    'OPEN',
+                                    'Chappathi and Dhal for approx. 50 people' );
+
+INSERT INTO donation_table1 VALUES ( 'DN1004',
+                                    'Mahesh',
+                                    '9876500004',
+                                    'Flat 2B, Black Residency',
+                                    'Porur',
+                                    'Fresh',
+                                    50.50,
+                                    TO_DATE('2025-05-01 18:30', 'YYYY-MM-DD HH24:MI'),
+                                    TO_DATE('2025-05-01 22:45', 'YYYY-MM-DD HH24:MI'),
+                                    'Evening before 5 PM',
+                                    'OPEN',
+                                    'Groceries for approx. 50 people' );
+
+INSERT INTO donation_table1 VALUES ( 'DN1005',
+                                    'Dinesh',
+                                    '9876500005',
+                                    'Flat 2B, White Residency',
+                                    'Porur',
+                                    'Cooked',
+                                    40.50,
+                                    TO_DATE('2025-05-01 19:00', 'YYYY-MM-DD HH24:MI'),
+                                    TO_DATE('2025-05-01 22:00', 'YYYY-MM-DD HH24:MI'),
+                                    'Evening before 5 PM',
+                                    'OPEN',
+                                    'Naan and curry for approx. 100 people' );
+
+
+CREATE TABLE trip_table1 (
+    trip_id                   NUMBER(10) PRIMARY KEY,
+    donation_id               VARCHAR2(10),
+    volunteer_id              VARCHAR2(15),
+    vehicle_type              VARCHAR2(20),
+    vehicle_capacity          NUMBER(10, 2),
+    assigned_time             DATE,
+    pickup_time               DATE,
+    delivery_location         VARCHAR2(200),
+    delivery_ngo_shelter_name VARCHAR2(150),
+    delivery_quantity         NUMBER(10, 2),
+    trip_status               VARCHAR2(20),
+    notes                     VARCHAR2(400),
+    
+    CONSTRAINT fk_trip_donation FOREIGN KEY ( donation_id )
+        REFERENCES donation_table ( donation_id )
+);
+
+INSERT INTO trip_table1 VALUES ( 860001,
+                                'DN1002',
+                                'VL101',
+                                'VAN',
+                                200.00,
+                                TO_DATE('2025-04-01 20:00', 'YYYY-MM-DD HH24:MI'),
+                                NULL,
+                                'Shelter Home A, 3rd Cross Street',
+                                'Shelter Home A',
+                                0.00,
+                                'PLANNED',
+                                'Plan to combine with other donations' );
+
+INSERT INTO trip_table1 VALUES ( 860002,
+                                'DN1003',
+                                'VL102',
+                                'VAN',
+                                250.00,
+                                TO_DATE('2025-04-02 15:00', 'YYYY-MM-DD HH24:MI'),
+                                NULL,
+                                'Children Home A, 3rd Cross Street',
+                                'Children Home A',
+                                0.00,
+                                'PLANNED',
+                                'Volunteer assigned, waiting for pickup' );
+
+INSERT INTO trip_table1 VALUES ( 860003,
+                                  'DN1004',
+                                  'VL103',
+                                  'BIKE',
+                                  50.00,
+                                  TO_DATE('2025-04-01 18:30', 'YYYY-MM-DD HH24:MI'),
+                                  NULL,
+                                  'Old Age Home B, Main Road',
+                                  'Old Age Home B',
+                                  0.00,
+                                  'PLANNED',
+                                  'Pickup scheduled for evening' );
+
+INSERT INTO trip_table1 VALUES ( 860004,
+                                  'DN1005',
+                                  'VL104',
+                                  'TRUCK',
+                                  500.00,
+                                  TO_DATE('2025-04-02 09:00', 'YYYY-MM-DD HH24:MI'),
+                                  NULL,
+                                  'Community Shelter C, Park Street',
+                                  'Community Shelter C',
+                                  0.00,
+                                  'PLANNED',
+                                  'Large quantity donation' );
+
+INSERT INTO trip_table1 VALUES ( 860005,
+                                  'DN1005',
+                                  'VL105',
+                                  'VAN',
+                                  250.00,
+                                  TO_DATE('2025-04-02 14:00', 'YYYY-MM-DD HH24:MI'),
+                                  NULL,
+                                  'Women Shelter D, Lake View',
+                                  'Women Shelter D',
+                                  0.00,
+                                  'PLANNED',
+                                  'Volunteer assigned, waiting for pickup' );
+                                  
+                                  
+                                  
+                                  CREATE SEQUENCE trip_seq1
+                                  START WITH 860001 
+                                  INCREMENT BY 1;
